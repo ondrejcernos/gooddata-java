@@ -143,7 +143,7 @@ public class GoodData {
         final HttpClient client = createHttpClient(login, password, hostname, port, protocol, builder);
 
         final UriPrefixingClientHttpRequestFactory factory = new UriPrefixingClientHttpRequestFactory(
-                new HttpComponentsClientHttpRequestFactory(client), hostname, port, protocol);
+                new HttpComponentsClientHttpRequestFactory(new GoodDataCloseableHttpClientWrapper(client)), hostname, port, protocol);
         final RestTemplate restTemplate = new RestTemplate(factory);
         restTemplate.setInterceptors(Arrays.<ClientHttpRequestInterceptor>asList(
                 new HeaderSettingRequestInterceptor(singletonMap("Accept", MediaType.APPLICATION_JSON_VALUE))));
